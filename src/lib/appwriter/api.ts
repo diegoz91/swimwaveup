@@ -402,12 +402,11 @@ export async function savePost(userId: string, postId: string) {
 
     if (!updatedPost) throw Error;
 
-    return updatedPost;
+    return updatedPost ;
   } catch (error) {
     console.log(error);
   }
 }
-
 // ============================== DELETE SAVED POST
 export async function deleteSavedPost(savedRecordId: string) {
   try {

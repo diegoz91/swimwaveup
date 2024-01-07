@@ -5,31 +5,32 @@ import { convertFileToUrl } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 type FileUploaderProps = {
-  fieldChange: (files: File[]) => void;
-  mediaUrl: string;
+ fieldChange: (files: File[]) => void;
+ mediaUrl: string;
 };
 
 const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
-  const [file, setFile] = useState<File[]>([]);
-  const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
+ const [file, setFile] = useState<File[]>([]);
+ const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
 
-  const onDrop = useCallback(
+ const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
       fieldChange(acceptedFiles);
       setFileUrl(convertFileToUrl(acceptedFiles[0]));
     },
     [file]
-  );
+ );
 
-  const { getRootProps, getInputProps } = useDropzone({
+ const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/*": [".png", ".jpeg", ".jpg"],
+      "video/*": [".mp4", ".gif", ".MP4", ".GIF"],
     },
-  });
+ });
 
-  return (
+ return (
     <div
       {...getRootProps()}
       className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
@@ -54,7 +55,7 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
           <h3 className="base-medium text-light-2 mb-2 mt-6">
             Drag photo here
           </h3>
-          <p className="text-light-4 small-regular mb-6">SVG, PNG, JPG</p>
+          <p className="text-light-4 small-regular mb-6">SVG, PNG, JPG, MP4, GIF</p>
 
           <Button type="button" className="shad-button_dark_4">
             Select from computer
@@ -62,7 +63,7 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
         </div>
       )}
     </div>
-  );
+ );
 };
 
 export default FileUploader;
