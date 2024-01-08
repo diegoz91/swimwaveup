@@ -15,7 +15,6 @@ export async function createUserAccount(user: INewUser) {
       user.email,
       user.password,
       user.name,
-      user.surname,
     );
 
     if (!newAccount) throw Error;
@@ -25,7 +24,7 @@ export async function createUserAccount(user: INewUser) {
     const newUser = await saveUserToDB({
       accountId: newAccount.$id,
       name: newAccount.name,
-      surname: newAccount.surname,
+      surname: user.surname,
       email: newAccount.email,
       username: user.username,
       imageUrl: avatarUrl,

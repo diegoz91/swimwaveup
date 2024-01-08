@@ -56,7 +56,7 @@ export const useSignOutAccount = () => {
 // ============================================================
 
 export const useGetPosts = () => {
-  return useInfiniteQuery({
+ return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
     queryFn: getInfinitePosts as any,
     getNextPageParam: (lastPage: any) => {
@@ -69,7 +69,7 @@ export const useGetPosts = () => {
       const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
       return lastId;
     },
-  });
+ });
 };
 
 export const useSearchPosts = (searchTerm: string) => {
