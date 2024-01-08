@@ -5,7 +5,7 @@ import { useGetUsers } from "@/lib/ract-query/queriesAndMutation";
 const AllUsers = () => {
   const { toast } = useToast();
 
-  const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers();
+  const { data: creators, isPending, isError: isErrorCreators } = useGetUsers();
 
   if (isErrorCreators) {
     toast({ title: "Something went wrong." });

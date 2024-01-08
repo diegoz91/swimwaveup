@@ -8,7 +8,7 @@ const EditPost = () => {
   const { id } = useParams();
   const { data: post, isPending } = useGetPostById(id);
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="flex-center w-full h-full">
         <Loader />
