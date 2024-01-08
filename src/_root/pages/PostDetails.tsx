@@ -12,7 +12,7 @@ const PostDetails = () => {
   const { id } = useParams();
   const { user } = useUserContext();
 
-  const { data: post, isLoading } = useGetPostById(id);
+  const { data: post, isPending } = useGetPostById(id);
   const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
     post?.creator.$id
   );
@@ -44,7 +44,7 @@ const PostDetails = () => {
         </Button>
       </div>
 
-      {isLoading || !post ? (
+      {isPending || !post ? (
         <Loader />
       ) : (
         <div className="post_details-card">

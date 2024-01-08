@@ -17,7 +17,7 @@ const AllUsers = () => {
     <div className="common-container">
       <div className="user-container">
         <h2 className="h3-bold md:h2-bold text-left w-full">Tutti gli utenti</h2>
-        {isLoading && !creators ? (
+        {isPending && !creators ? (
           <Loader />
         ) : (
           <ul className="user-grid">
