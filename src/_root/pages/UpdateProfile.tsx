@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById, useUpdateUser } from "@/lib/ract-query/queriesAndMutation";
-import { ProfileValidation } from "@/lib/validation/indx";
+import { ProfileValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -31,7 +31,7 @@ const UpdateProfile = () => {
 
   // Queries
   const { data: currentUser } = useGetUserById(id || "");
-  const { mutateAsync: updateUser, isLoading: isLoadingUpdate } =
+  const { mutateAsync: updateUser, isPending: isPendingUpdate } =
     useUpdateUser();
 
   if (!currentUser)
@@ -195,8 +195,8 @@ const UpdateProfile = () => {
               <Button
                 type="submit"
                 className="shad-button_primary whitespace-nowrap"
-                disabled={isLoadingUpdate}>
-                {isLoadingUpdate && <Loader />}
+                disabled={isPendingUpdate}>
+                {isPendingUpdate && <Loader />}
                 Update Profile
               </Button>
             </div>

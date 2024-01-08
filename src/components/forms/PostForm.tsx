@@ -14,7 +14,7 @@ import {
 import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
 import { Input } from "../ui/input";
-import { PostValidation } from "@/lib/validation/indx";
+import { PostValidation } from "@/lib/validation";
 import { Models } from "appwrite";
 import { useCreatePost, useUpdatePost } from "@/lib/ract-query/queriesAndMutation";
 import { useUserContext } from "@/context/AuthContext";
@@ -42,9 +42,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
   });
 
   // Query
-  const { mutateAsync: createPost, isLoading: isLoadingCreate } =
+  const { mutateAsync: createPost, isPending: isPendingCreate } =
     useCreatePost();
-  const { mutateAsync: updatePost, isLoading: isLoadingUpdate } =
+  const { mutateAsync: updatePost, isPending: isPendingUpdate } =
     useUpdatePost();
 
   // Handler
@@ -164,8 +164,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
-            disabled={isLoadingCreate || isLoadingUpdate}>
-            {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+            disabled={isPendingCreate || isPendingUpdate}>
+            {(isPendingCreate || isPendingUpdate) && <Loader />}
             {action} Post
           </Button>
         </div>
