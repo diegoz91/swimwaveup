@@ -85,13 +85,13 @@ const Profile = () => {
                   height={20}
                 />
                 <p className="flex whitespace-nowrap small-medium">
-                  Edit Profile
+                Modifica Profilo
                 </p>
               </Link>
             </div>
             <div className={`${user.id === id && "hidden"}`}>
               <Button type="button" className="shad-button_primary px-8">
-                Follow
+              Seguiti
               </Button>
             </div>
           </div>
@@ -124,7 +124,7 @@ const Profile = () => {
               width={20}
               height={20}
             />
-            Liked Posts
+            Mi piace ai Posts
           </Link>
           
         </div>

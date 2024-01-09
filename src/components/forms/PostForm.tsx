@@ -60,7 +60,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
       if (!updatedPost) {
         toast({
-          title: `${action} post failed. Please try again.`,
+          title: `${action} Post non è stato creato. Per favore riprova.`,
         });
       }
       return navigate(`/posts/${post.$id}`);
@@ -74,7 +74,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
     if (!newPost) {
       toast({
-        title: `${action} post failed. Please try again.`,
+        title: `${action} Post non è stato creato. Per favore riprova.`,
       });
     }
     navigate("/");
@@ -90,7 +90,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
           name="caption"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Caption</FormLabel>
+              <FormLabel className="shad-form_label">Scrivi qualcosa</FormLabel>
               <FormControl>
                 <Textarea
                   className="shad-textarea custom-scrollbar"
@@ -107,7 +107,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
           name="file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Add Photos</FormLabel>
+              <FormLabel className="shad-form_label">Aggiungi foto</FormLabel>
               <FormControl>
                 <FileUploader
                   fieldChange={field.onChange}
@@ -124,7 +124,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Add Location</FormLabel>
+              <FormLabel className="shad-form_label">Aggiungi luogo</FormLabel>
               <FormControl>
                 <Input type="text" className="shad-input" {...field} />
               </FormControl>
@@ -139,7 +139,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">
-                Add Tags (separated by comma " , ")
+              Aggiungi tag (separati da virgola " , ")
               </FormLabel>
               <FormControl>
                 <Input
@@ -159,7 +159,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             type="button"
             className="shad-button_dark_4"
             onClick={() => navigate(-1)}>
-            Cancel
+            Cancella
           </Button>
           <Button
             type="submit"

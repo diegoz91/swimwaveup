@@ -33,7 +33,7 @@ const SigninForm = () => {
     const session = await signInAccount(user);
 
     if (!session) {
-      toast({ title: "Login failed. Please try again." });
+      toast({ title: "Accesso non riuscito. Per favore riprova." });
       
       return;
     }
@@ -45,7 +45,7 @@ const SigninForm = () => {
 
       navigate("/");
     } else {
-      toast({ title: "Login failed. Please try again.", });
+      toast({ title: "Accesso non riuscito. Per favore riprova.", });
       
       return;
     }
@@ -57,10 +57,10 @@ const SigninForm = () => {
         <img src="/assets/images/logo-no-background.svg" alt="logo" width={300} />
 
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
-          Log in to your account
+          Accedi al tuo profilo
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          Welcome back! Please enter your details.
+          Bentornato! Per favore inserisci i tuoi dati.
         </p>
         <form
           onSubmit={form.handleSubmit(handleSignin)}
@@ -99,16 +99,16 @@ const SigninForm = () => {
                 <Loader /> Loading...
               </div>
             ) : (
-              "Log in"
+              "Accedi"
             )}
           </Button>
 
           <p className="text-small-regular text-light-2 text-center mt-2">
-            Don&apos;t have an account?
+            Non hai un account?
             <Link
               to="/sign-up"
               className="text-primary-500 text-small-semibold ml-1">
-              Sign up
+              Registrati
             </Link>
           </p>
         </form>
