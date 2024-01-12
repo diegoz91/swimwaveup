@@ -25,7 +25,7 @@ const Saved = () => {
           alt="edit"
           className="invert-white"
         />
-        <h2 className="h3-bold md:h2-bold text-left w-full">Salva i Posts</h2>
+        <h2 className="h3-bold md:h2-bold text-left w-full">Posts Salvati</h2>
       </div>
 
       {!currentUser ? (

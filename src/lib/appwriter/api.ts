@@ -248,6 +248,7 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
   }
 }
 
+
 // ============================== GET POST BY ID
 export async function getPostById(postId?: string) {
   if (!postId) throw Error;
@@ -352,8 +353,6 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-
-
 // ============================== LIKE / UNLIKE POST
 export async function likePost(postId: string, likedArray: string[]) {
   try {
@@ -374,18 +373,6 @@ export async function likePost(postId: string, likedArray: string[]) {
   }
 }
 
-
-// ============================== FOLLOW / UNFOLLOW USER
-
-/* export async function follow(userId: string, followArray: string) {
-  try {
-    
-  } catch (error) {
-    
-  }
-  
-} */
-
 // ============================== SAVE POST
 export async function savePost(userId: string, postId: string) {
   try {
@@ -394,7 +381,7 @@ export async function savePost(userId: string, postId: string) {
       appwriteConfig.savesCollectionId,
       ID.unique(),
       {
-        user: userId,
+        users: userId,
         post: postId,
       }
     );
