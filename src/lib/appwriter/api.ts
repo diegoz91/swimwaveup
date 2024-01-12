@@ -355,14 +355,14 @@ export async function deletePost(postId?: string, imageId?: string) {
 
 
 // ============================== LIKE / UNLIKE POST
-export async function likePost(postId: string, likesArray: string[]) {
+export async function likePost(postId: string, likedArray: string[]) {
   try {
     const updatedPost = await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       postId,
       {
-        likes: likesArray,
+        likes: likedArray,
       }
     );
 
@@ -401,7 +401,7 @@ export async function savePost(userId: string, postId: string) {
 
     if (!updatedPost) throw Error;
 
-    return updatedPost ;
+    return updatedPost;
   } catch (error) {
     console.log(error);
   }
