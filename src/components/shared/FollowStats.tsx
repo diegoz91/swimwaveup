@@ -9,26 +9,12 @@ const FollowStats = ({ targetUserId, postlength }: FollowButtonProps) => {
     const { data: followers, isPending, error } = useGetFollowers(targetUserId);
     const { data: following, isPending: isLoadingFollowing, error:error1 } = useGetFollowing(targetUserId);
 
-    // const { data: currentFollowers, isPending: currentIsPending, error: currentError } = useGetFollowers(currentUserId);
-    // const { data: currentFollowing, isPending: currentIsLoadingFollowing, error: currentError1 } = useGetFollowing(currentUserId);
-    
-// console.log(currentFollowing);
   console.log(following)
 
   if (isPending) return <p>Loading followers...</p>;
   if (isLoadingFollowing) return <p>Loading following...</p>;
   if (error) return <p>Error loading followers</p>;
   if (error1) return <p>Error loading followers</p>;
-
-    // if (currentIsPending) return <p>Loading followers...</p>;
-    // if (currentIsLoadingFollowing) return <p>Loading following...</p>;
-    // if (currentError) return <p>Error loading followers</p>;
-    // if (currentError1) return <p>Error loading followers</p>;
-
-
-  // const followersCurrentCount = currentFollowers ? currentFollowers.length : 0;
-
-  // const followingCurrentCount = currentFollowing ? currentFollowing.length : 0;
 
   const followersCount = followers ? followers.length : 0;
 
