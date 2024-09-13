@@ -1,36 +1,28 @@
-import {
-  Route,
-  Routes,
-  Link,
-  Outlet,
-  useParams,
-  useLocation,
-} from "react-router-dom";
-
-import { Button } from "@/components/ui/button";
-import { LikedPosts } from "@/_root/pages";
+import { Route, Routes, Link, Outlet, useParams, useLocation } from "react-router-dom";
+import Loader from "@/components/shared/Loader";
+import GridPostList2 from "@/components/shared/GridPostList2";
+import FollowButton from "@/components/shared/FollowButton";
+import FollowStats from "@/components/shared/FollowStats";
+import LikedPosts from "./LikedPosts";
+import { useEffect, useState } from "react";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/ract-query/queriesAndMutation";
-import { GridPostList, Loader } from "@/components/shared";
-
-interface StabBlockProps {
-  value: string | number;
-  label: string;
-}
-
-const StatBlock = ({ value, label }: StabBlockProps) => (
-  <div className="flex-center gap-2">
-    <p className="small-semibold lg:body-bold text-primary-500">{value}</p>
-    <p className="small-medium lg:base-medium text-light-2">{label}</p>
-  </div>
-);
 
 const Profile = () => {
+  const [showButton, setShowbutton] = useState(true);
   const { id } = useParams();
   const { user } = useUserContext();
   const { pathname } = useLocation();
-
   const { data: currentUser } = useGetUserById(id || "");
+
+  console.log(currentUser?.posts);
+  console.log(user.id);
+
+  useEffect(() => {
+    if (user.id === id) {
+      setShowbutton(false);
+    }
+  }, [showButton, id, user]);
 
   if (!currentUser)
     return (
@@ -55,29 +47,19 @@ const Profile = () => {
               <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">
                 {currentUser.name} {currentUser.surname}
               </h1>
-              <p className="small-regular md:body-medium text-light-3 text-center xl:text-left">
-                @{currentUser.username} 
+              <p className="small-regular md:body-medium text-primary-500 text-center xl:text-left">
+                @{currentUser.username}
               </p>
             </div>
 
-            <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">
-              <StatBlock value={currentUser.posts.length} label="Posts" />
-              <StatBlock value={20} label="Followers" />
-              <StatBlock value={20} label="Following" />
-            </div>
-
-            <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
-              {currentUser.bio}
-            </p>
+            <FollowStats targetUserId={currentUser.$id} postlength={currentUser.posts.length} />
           </div>
-
           <div className="flex justify-center gap-4">
             <div className={`${user.id !== currentUser.$id && "hidden"}`}>
               <Link
                 to={`/update-profile/${currentUser.$id}`}
-                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${
-                  user.id !== currentUser.$id && "hidden"
-                }`}>
+                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${user.id !== currentUser.$id && "hidden"
+                  }`}>
                 <img
                   src={"/assets/icons/edit.svg"}
                   alt="edit"
@@ -85,55 +67,58 @@ const Profile = () => {
                   height={20}
                 />
                 <p className="flex whitespace-nowrap small-medium">
-                Modifica Profilo
+                  Modifica il Profilo
                 </p>
               </Link>
             </div>
-            <div className={`${user.id === id && "hidden"}`}>
-              <Button type="button" className="shad-button_primary px-8">
-              Seguiti
-              </Button>
+            <div>
+              <FollowButton targetUserId={user.id} currentUserId={currentUser.$id} />
             </div>
           </div>
         </div>
       </div>
 
+      {currentUser.bio &&
+        <div className="flex gap-10 : max-xl:justify-center items-center max-w-4xl w-full">
+          <h1 className="text-center xl:text-left h3-bold md:h1-semibold ">Bio</h1>
+          <p className=" text-center xl:text-left overflow-hidden">
+            {currentUser.bio}
+          </p>
+        </div>
+      }
       {currentUser.$id === user.id && (
         <div className="flex max-w-5xl w-full">
           <Link
             to={`/profile/${id}`}
-            className={`profile-tab rounded-l-lg ${
-              pathname === `/profile/${id}` && "!bg-dark-3"
-            }`}>
+            className={`profile-tab rounded-l-lg ${pathname === `/profile/${id}` && "!bg-dark-3"
+              }`}>
             <img
               src={"/assets/icons/posts.svg"}
               alt="posts"
               width={20}
               height={20}
             />
-            Posts
+            I tuoi Post
           </Link>
           <Link
             to={`/profile/${id}/liked-posts`}
-            className={`profile-tab rounded-r-lg ${
-              pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
-            }`}>
+            className={`profile-tab rounded-r-lg ${pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
+              }`}>
             <img
               src={"/assets/icons/like.svg"}
               alt="like"
               width={20}
               height={20}
             />
-            Mi piace ai Posts
+            Mi piace ai Post
           </Link>
-          
         </div>
       )}
 
       <Routes>
         <Route
           index
-          element={<GridPostList posts={currentUser.posts} showUser={false} />}
+          element={<GridPostList2 posts={currentUser.posts} user={user} />}
         />
         {currentUser.$id === user.id && (
           <Route path="/liked-posts" element={<LikedPosts />} />

@@ -521,7 +521,6 @@ export async function updateUser(user: IUpdateUser) {
       user.userId,
       {
         name: user.name,
-        surname: user.surname,
         bio: user.bio,
         imageUrl: image.imageUrl,
         imageId: image.imageId,
@@ -546,5 +545,80 @@ export async function updateUser(user: IUpdateUser) {
     return updatedUser;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function followUser(followerId: string, followingId: string) {
+  try {
+    const relationship = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.relationshipsCollectionId,
+      ID.unique(),
+      {
+        followerId: followerId,
+        followingId: followingId,
+        createdAt: new Date().toISOString()
+      }
+    );
+
+    return relationship;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function unfollowUser(followerId: string, followingId: string) {
+  try {
+    // Query to find the relationship document
+    const relationships = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.relationshipsCollectionId,
+      [
+        Query.equal('followerId', followerId),
+        Query.equal('followingId', followingId)
+      ]
+    );
+
+    if (relationships.total === 0) throw new Error('Relationship not found');
+
+    const relationshipId = relationships.documents[0].$id;
+
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.relationshipsCollectionId,
+      relationshipId
+    );
+
+    return { status: 'ok' };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getFollowers(userId: string) {
+  try {
+    const followers = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.relationshipsCollectionId,
+      [Query.equal('followingId', userId)]
+    );
+
+    return followers.documents;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getFollowing(userId: string) {
+  try {
+    const following = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.relationshipsCollectionId,
+      [Query.equal('followerId', userId)]
+    );
+
+    return following.documents;
+  } catch (error) {
+    console.error(error);
   }
 }

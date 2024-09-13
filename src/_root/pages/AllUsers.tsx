@@ -1,36 +1,24 @@
-import { Loader, UserCard } from "@/components/shared";
-import { useToast } from "@/components/ui/use-toast";
-import { useGetUsers } from "@/lib/ract-query/queriesAndMutation";
+import GridUserList from '@/components/shared/GridUserList';
+import { useUserContext } from '@/context/AuthContext';
+import { useGetUsers } from '@/lib/ract-query/queriesAndMutation';
+
+import { useLocation } from 'react-router-dom';
 
 const AllUsers = () => {
-  const { toast } = useToast();
-
-  const { data: creators, isPending, isError: isErrorCreators } = useGetUsers();
-
-  if (isErrorCreators) {
-    toast({ title: "Something went wrong." });
-    
-    return;
-  }
-
+  const { user } = useUserContext();
+  const { data: users } = useGetUsers(10);
+  console.log(users);
+  const { pathname } = useLocation();
   return (
-    <div className="common-container">
-      <div className="user-container">
-        <h2 className="h3-bold md:h2-bold text-left w-full">Tutti gli utenti</h2>
-        {isPending && !creators ? (
-          <Loader />
-        ) : (
-          <ul className="user-grid">
-            {creators?.documents.map((creator) => (
-              <li key={creator?.$id} className="flex-1 min-w-[200px] w-full  ">
-                <UserCard user={creator} />
-              </li>
-            ))}
-          </ul>
-        )}
+    <div className={pathname === "/" ? 'hidden xl:flex flex-col flex-shrink items-center max-w-[500px] min-w-56 gap-10 mt-10 bg-scroll overflow-y-scroll' : 'explore-container gap-10'}>
+      <div className="explore-inner container">
+        <h2 className="h3-bold md:h2-bold w-full">{pathname === "/" ? `Top Creators` : `All Users`}</h2>
+      </div>
+      <div className="container">
+        <GridUserList allUsers={users} currentUser={user} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AllUsers;
+export default AllUsers

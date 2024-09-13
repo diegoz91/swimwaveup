@@ -15,15 +15,11 @@ export enum QUERY_KEYS {
     GET_USER_POSTS = "getUserPosts",
     GET_FILE_PREVIEW = "getFilePreview",
 
-    // FOLLOW KEYS
-/* 
-    GET_FOLLOWERS = "getFollowers",
-    GET_INFINITE_FOLLOWERS = "getInfiniteFollowers",
-    GET_RECENT_FOLLOWERS = "getRecentFollowers",
-    GET_FOLLOWERS_BY_ID = "getFollowersById",
-    GET_USER_FOLLOWERS = "getUserFollowers", */
-
-
     //  SEARCH KEYS
     SEARCH_POSTS = "getSearchPosts",
+
+    // FOLLOWERS
+    GET_FOLLOWERS = "getFollowers",
+    GET_FOLLOWING = "getFollowing",
+    
   }
