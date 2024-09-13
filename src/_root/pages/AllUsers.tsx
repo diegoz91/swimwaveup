@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 const AllUsers = () => {
   const { user } = useUserContext();
   const { data: users } = useGetUsers(10);
-  console.log(users);
+  
   const { pathname } = useLocation();
   return (
     <div className={pathname === "/" ? 'hidden xl:flex flex-col flex-shrink items-center max-w-[500px] min-w-56 gap-10 mt-10 bg-scroll overflow-y-scroll' : 'explore-container gap-10'}>
